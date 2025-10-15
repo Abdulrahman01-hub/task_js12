@@ -1,32 +1,32 @@
-const searchInput = document.getElementById("searchInput");
-const searchBtn = document.getElementById("searchBtn");
+const input = document.getElementById("searchInput");
+const btn = document.getElementById("searchBtn");
 const results = document.getElementById("results");
+const key = "52453967-36db5c6ed5143a64d60e1c9f5";
 
-function showImages(keyword) {
-    results.innerHTML = "";
+function getImages(q) {
+    results.innerHTML = "Yukleniyor...";
 
-    const filtered = data.hits.filter(item =>
-        item.tags.toLowerCase().includes(keyword.toLowerCase())
-    );
+    fetch(`https://pixabay.com/api/?key=${key}&q=${q}&image_type=photo`)
+        .then(res => res.json())
+        .then(data => {
+            if (!data.hits.length) {
+                results.innerHTML = "Sonuc bulunamadi";
+                return;
+            }
 
-    if (filtered.length === 0) {
-        results.innerHTML = `<p class="text-center text-gray-400 col-span-full">Sonuç bulunamadi 😢</p>`;
-        return;
-    }
-
-    filtered.forEach(item => {
-        const div = document.createElement("div");
-        div.className = "bg-gray-800 rounded-lg p-3 hover:scale-105 transform transition";
-        div.innerHTML = `
-      <img src="${item.previewURL}" alt="${item.tags}" class="rounded-lg mb-2 w-full">
-      <p class="text-blue-400 font-semibold">${item.user}</p>
-      <p class="text-sm text-gray-300">${item.tags}</p>
-    `;
-        results.appendChild(div);
-    });
+            results.innerHTML = data.hits.map(i => `
+        <div class="bg-gray-800 rounded-lg p-3 hover:scale-105 transition">
+          <img src="${i.previewURL}" alt="${i.tags}" class="rounded-lg mb-2 w-full">
+          <p class="text-blue-400 font-semibold">${i.user}</p>
+          <p class="text-sm text-gray-300">${i.tags}</p>
+        </div>
+      `).join("");
+        })
+        .catch(() => results.innerHTML = "Bir xeta olustu");
 }
 
-searchBtn.addEventListener("click", () => {
-    const keyword = searchInput.value.trim();
-    if (keyword) showImages(keyword);
-}); 
+btn.onclick = () => {
+    const q = input.value.trim();
+    if (q) getImages(q);
+    else results.innerHTML = "Bir şey yaz";
+};
