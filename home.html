@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-900 text-white min-h-screen flex flex-col items-center p-6">
+
+    <h1 class="text-3xl font-bold mb-6 text-blue-400">Pixabay Görsel Arama</h1>
+
+    <div class="flex gap-3 mb-8">
+        <input id="searchInput" type="text" placeholder="örnek: london, cat, car..."
+            class="px-4 py-2 rounded-lg text-gray-900 focus:outline-none w-64">
+        <button id="searchBtn" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg">
+            Ara
+        </button>
+    </div>
+
+    <div id="results" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 w-full max-w-6xl">
+    </div>
+
+    <script src="data.js"></script>
+    <script src="join.js"></script>
+</body>
+
+</html>
